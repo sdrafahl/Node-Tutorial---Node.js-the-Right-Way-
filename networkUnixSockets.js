@@ -8,18 +8,11 @@ const
         
         //reporting
         console.log('Subscriber Connected.');
-        connection.write(JSON.stringify({
-                type: 'watching',
-                file: filename
-            }) + '\n');
-    
+        connection.write("Now watching'" + filename + "' for changes....\n ");
+
         //watcher
         let watcher = fs.watch(filename, function(){
-            connection.write(JSON.stringify({
-                type: 'changed',
-                file: filename,
-                timestamp: Date.now()
-            }) + '\n');
+            connection.write("File '" + filename +"' changed: " + Date.now() + "\n");
         });
         //cleanup
             connection.on('close', function(){
@@ -33,12 +26,12 @@ const
         throw Error('No target filename was specified');
     }
 
-    server.listen(2000,function(){
+    server.listen(5432,function(){
         console.log('Listening for subscribers...');
-    });
+    })
     
 
     
 
    
-    server.listen(2000);
+    server.listen(5432);
